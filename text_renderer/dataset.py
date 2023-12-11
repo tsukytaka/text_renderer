@@ -1,5 +1,6 @@
 import os
 import json
+import csv
 from typing import Dict
 
 import lmdb
@@ -79,6 +80,7 @@ class ImgDataset(Dataset):
     """
 
     LABEL_NAME = "labels.json"
+    LABEL_PP_NAME = "labels.txt"
 
     def __init__(self, data_dir: str):
         super().__init__(data_dir)
@@ -86,8 +88,10 @@ class ImgDataset(Dataset):
         if not os.path.exists(self._img_dir):
             os.makedirs(self._img_dir)
         self._label_path = os.path.join(data_dir, self.LABEL_NAME)
-
+        self._label_pp_path = os.path.join(data_dir, self.LABEL_PP_NAME)
+        
         self._data = {"num-samples": 0, "labels": {}, "sizes": {}}
+        self._data_pp = []
         if os.path.exists(self._label_path):
             with open(self._label_path, "r", encoding="utf-8") as f:
                 self._data = json.load(f)
@@ -96,9 +100,11 @@ class ImgDataset(Dataset):
         img_path = os.path.join(self._img_dir, name + ".jpg")
         cv2.imwrite(img_path, image, self.encode_param())
         self._data["labels"][name] = label
+        self._data_pp.append([img_path,label])
 
         height, width = image.shape[:2]
         self._data["sizes"][name] = (width, height)
+
 
     def read(self, name: str) -> Dict:
         img_path = os.path.join(self._img_dir, name + ".jpg")
@@ -119,6 +125,10 @@ class ImgDataset(Dataset):
     def close(self):
         with open(self._label_path, "w", encoding="utf-8") as f:
             json.dump(self._data, f, indent=2, ensure_ascii=False)
+        with open(self._label_pp_path, 'w', encoding="utf-8") as csv_file:
+            wr = csv.writer(csv_file, delimiter='\t')
+            for items in self._data_pp:
+                wr.writerow(items)
 
 
 class LmdbDataset(Dataset):
@@ -134,7 +144,7 @@ class LmdbDataset(Dataset):
 
     def __init__(self, data_dir: str):
         super().__init__(data_dir)
-        self._lmdb_env = lmdb.open(self.data_dir, map_size=1099511627776)  # 1T
+        self._lmdb_env = lmdb.open(self.data_dir, map_size=10995116)  # 10M
         self._lmdb_txn = self._lmdb_env.begin(write=True)
 
     def write(self, name: str, image: np.ndarray, label: str):
