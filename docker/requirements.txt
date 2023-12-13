@@ -17,3 +17,5 @@ dataclasses
 pytest
 typer
 streamlit
+
+python main.py --config example_data/digital.py --dataset img --num_processes 2 --log_period 10
