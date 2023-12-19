@@ -100,13 +100,12 @@ if __name__ == "__main__":
     dataset_cls = LmdbDataset if args.dataset == "lmdb" else ImgDataset
 
     generator_cfgs = get_cfg(args.config)
-
+    logger.info(f"Size of generator_cfgs: {len(generator_cfgs)}")
     for generator_cfg in generator_cfgs:
         db_writer_process = DBWriterProcess(
             dataset_cls, data_queue, generator_cfg, args.log_period
         )
         db_writer_process.start()
-
         if args.num_processes == 0:
             process_setup(generator_cfg.render_cfg)
             for _ in range(generator_cfg.num_image):
@@ -124,6 +123,6 @@ if __name__ == "__main__":
 
                 pool.close()
                 pool.join()
-
             data_queue.put(STOP_TOKEN)
             db_writer_process.join()
+    

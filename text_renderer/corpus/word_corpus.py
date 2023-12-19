@@ -56,7 +56,7 @@ class WordCorpus(Corpus):
             with open(text_path, "r", encoding="utf-8") as f:
                 text = f.read()
                 texts.append(text.strip())
-
+        logger.info(f"texts: {texts}")
         if self.cfg.chars_file is not None:
             self.font_manager.update_font_support_chars(self.cfg.chars_file)
 

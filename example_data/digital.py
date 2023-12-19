@@ -39,7 +39,7 @@ def get_char_corpus():
             text_paths=[TEXT_DIR / "digital_text.txt"],
             filter_by_chars=True,
             chars_file=CHAR_DIR / "digital.txt",
-            length=(5, 10),
+            length=(2, 10),
             char_spacing=(-0.3, 1.3),
             **font_cfg
         ),
@@ -50,7 +50,7 @@ def base_cfg(
     name: str, corpus, corpus_effects=None, layout_effects=None, layout=None, gray=True
 ):
     return GeneratorCfg(
-        num_image=600,
+        num_image=2000,
         save_dir=OUT_DIR / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
@@ -60,19 +60,6 @@ def base_cfg(
             layout=layout,
             corpus=corpus,
             corpus_effects=corpus_effects,
-        ),
-    )
-
-
-def chn_data():
-    return base_cfg(
-        inspect.currentframe().f_code.co_name,
-        corpus=get_char_corpus(),
-        corpus_effects=Effects(
-            [
-                Line(0.5, color_cfg=FixedTextColorCfg()),
-                OneOf([DropoutRand(), DropoutVertical()]),
-            ]
         ),
     )
 
@@ -88,20 +75,6 @@ def digital_data():
         ),
     )
 
-def enum_data():
-    return base_cfg(
-        inspect.currentframe().f_code.co_name,
-        corpus=EnumCorpus(
-            EnumCorpusCfg(
-                text_paths=[TEXT_DIR / "enum_text.txt"],
-                filter_by_chars=True,
-                chars_file=CHAR_DIR / "chn.txt",
-                **font_cfg
-            ),
-        ),
-    )
-
-
 def rand_data():
     return base_cfg(
         inspect.currentframe().f_code.co_name,
@@ -110,54 +83,18 @@ def rand_data():
         ),
     )
 
-
-def eng_word_data():
+def word_data():
     return base_cfg(
         inspect.currentframe().f_code.co_name,
         corpus=WordCorpus(
             WordCorpusCfg(
-                text_paths=[TEXT_DIR / "eng_text.txt"],
+                text_paths=[TEXT_DIR / "digital_text.txt"],
                 filter_by_chars=True,
                 chars_file=CHAR_DIR / "eng.txt",
                 **font_cfg
             ),
         ),
     )
-
-
-def same_line_data():
-    return base_cfg(
-        inspect.currentframe().f_code.co_name,
-        layout=SameLineLayout(),
-        gray=False,
-        corpus=[
-            EnumCorpus(
-                EnumCorpusCfg(
-                    text_paths=[TEXT_DIR / "enum_text.txt"],
-                    filter_by_chars=True,
-                    chars_file=CHAR_DIR / "chn.txt",
-                    **font_cfg
-                ),
-            ),
-            CharCorpus(
-                CharCorpusCfg(
-                    text_paths=[
-                        TEXT_DIR / "chn_text.txt",
-                        TEXT_DIR / "eng_text.txt",
-                    ],
-                    filter_by_chars=True,
-                    chars_file=CHAR_DIR / "chn.txt",
-                    length=(5, 10),
-                    font_dir=font_cfg["font_dir"],
-                    font_list_file=font_cfg["font_list_file"],
-                    font_size=(30, 35),
-                ),
-            ),
-        ],
-        corpus_effects=[Effects([Padding(), DropoutRand()]), NoEffects()],
-        layout_effects=Effects(Line(p=1)),
-    )
-
 
 def extra_text_line_data():
     return base_cfg(
@@ -167,11 +104,10 @@ def extra_text_line_data():
             CharCorpus(
                 CharCorpusCfg(
                     text_paths=[
-                        TEXT_DIR / "chn_text.txt",
-                        TEXT_DIR / "eng_text.txt",
+                        TEXT_DIR / "digital_text.txt",
                     ],
                     filter_by_chars=True,
-                    chars_file=CHAR_DIR / "chn.txt",
+                    chars_file=CHAR_DIR / "digital.txt",
                     length=(9, 10),
                     font_dir=font_cfg["font_dir"],
                     font_list_file=font_cfg["font_list_file"],
@@ -181,11 +117,10 @@ def extra_text_line_data():
             CharCorpus(
                 CharCorpusCfg(
                     text_paths=[
-                        TEXT_DIR / "chn_text.txt",
-                        TEXT_DIR / "eng_text.txt",
+                        TEXT_DIR / "digital_text.txt",
                     ],
                     filter_by_chars=True,
-                    chars_file=CHAR_DIR / "chn.txt",
+                    chars_file=CHAR_DIR / "digital.txt",
                     length=(9, 10),
                     font_dir=font_cfg["font_dir"],
                     font_list_file=font_cfg["font_list_file"],
@@ -216,5 +151,8 @@ def imgaug_emboss_example():
 configs = [
     digital_data(),
     rand_data(),
+    # word_data(),
+    # extra_text_line_data(),
+    imgaug_emboss_example()
 ]
 # fmt: on
