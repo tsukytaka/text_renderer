@@ -144,7 +144,7 @@ class LmdbDataset(Dataset):
 
     def __init__(self, data_dir: str):
         super().__init__(data_dir)
-        self._lmdb_env = lmdb.open(self.data_dir, map_size=20995116)  # 20M
+        self._lmdb_env = lmdb.open(self.data_dir, map_size=50995116)  # 50M
         self._lmdb_txn = self._lmdb_env.begin(write=True)
 
     def write(self, name: str, image: np.ndarray, label: str):
