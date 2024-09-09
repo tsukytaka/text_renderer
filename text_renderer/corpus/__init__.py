@@ -3,7 +3,7 @@ from .char_corpus import CharCorpus, CharCorpusCfg
 from .enum_corpus import EnumCorpus, EnumCorpusCfg
 from .word_corpus import WordCorpus, WordCorpusCfg
 from .rand_corpus import RandCorpus, RandCorpusCfg
-
+from .rand_regex_corpus import RandRegexCorpus, RandRegexCorpusCfg
 
 __all__ = [
     "Corpus",
@@ -16,4 +16,6 @@ __all__ = [
     "WordCorpusCfg",
     "RandCorpus",
     "RandCorpusCfg",
+    "RandRegexCorpus",
+    "RandRegexCorpusCfg",
 ]

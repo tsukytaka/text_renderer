@@ -26,7 +26,7 @@ TEXT_DIR = DATA_DIR / "text"
 
 font_cfg = dict(
     font_dir=FONT_DIR,
-    font_list_file=FONT_LIST_DIR / "jp_fonts.txt",
+    font_list_file=FONT_LIST_DIR / "custom_fonts.txt",
     font_size=(30, 31),
 )
 
@@ -50,7 +50,7 @@ def base_cfg(
     name: str, corpus, corpus_effects=None, layout_effects=None, layout=None, gray=True
 ):
     return GeneratorCfg(
-        num_image=1000,
+        num_image=100,
         save_dir=OUT_DIR / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
@@ -68,7 +68,7 @@ def rand_data():
         inspect.currentframe().f_code.co_name,
         corpus=RandCorpus(
             # RandCorpusCfg(chars_file=CHAR_DIR / "jp_serial_fullsize.txt", **font_cfg),
-            RandCorpusCfg(chars_file=CHAR_DIR / "jp_serial_halfsize.txt", **font_cfg),
+            RandCorpusCfg(chars_file=CHAR_DIR / "jp_serial_fullsize.txt", **font_cfg),
         ),
         corpus_effects=Effects(
             [
@@ -78,9 +78,22 @@ def rand_data():
         ),
     )
 
+def rand_regex_data():
+    return base_cfg(
+        inspect.currentframe().f_code.co_name,
+        corpus=RandRegexCorpus(
+            RandRegexCorpusCfg(chars_file=CHAR_DIR / "jp_serial_fullsize.txt", **font_cfg),
+        ),
+        corpus_effects=Effects(
+            [
+                Line(0.5, color_cfg=FixedTextColorCfg()),
+                #OneOf([DropoutRand(), DropoutVertical()]),
+            ]
+        ),
+    )
 # fmt: off
 # The configuration file must have a configs variable
 configs = [
-    rand_data(),
+    rand_regex_data(),
 ]
 # fmt: on
