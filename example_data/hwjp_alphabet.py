@@ -36,9 +36,9 @@ perspective_transform = NormPerspectiveTransformCfg(20, 20, 1.5)
 def get_char_corpus():
     return CharCorpus(
         CharCorpusCfg(
-            text_paths=[TEXT_DIR / "digital_text.txt"],
+            text_paths=[TEXT_DIR / "D_number_text.txt"],
             filter_by_chars=True,
-            chars_file=CHAR_DIR / "hwjp_number.txt",
+            chars_file=CHAR_DIR / "alphabet.txt",
             length=(3, 10),
             char_spacing=(-0.3, 1.3),
             **font_cfg
@@ -50,7 +50,7 @@ def base_cfg(
     name: str, corpus, corpus_effects=None, layout_effects=None, layout=None, gray=True
 ):
     return GeneratorCfg(
-        num_image=200,
+        num_image=10,
         save_dir=OUT_DIR / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
@@ -79,7 +79,7 @@ def rand_data():
     return base_cfg(
         inspect.currentframe().f_code.co_name,
         corpus=RandCorpus(
-            RandCorpusCfg(chars_file=CHAR_DIR / "hwjp_number.txt", **font_cfg),
+            RandCorpusCfg(chars_file=CHAR_DIR / "alphabet.txt", **font_cfg),
         ),
     )
 
@@ -88,9 +88,9 @@ def word_data():
         inspect.currentframe().f_code.co_name,
         corpus=WordCorpus(
             WordCorpusCfg(
-                text_paths=[TEXT_DIR / "digital_text.txt"],
+                text_paths=[TEXT_DIR / "D_number_text.txt"],
                 filter_by_chars=True,
-                chars_file=CHAR_DIR / "eng.txt",
+                chars_file=CHAR_DIR / "alphabet.txt",
                 **font_cfg
             ),
         ),
@@ -104,10 +104,10 @@ def extra_text_line_data():
             CharCorpus(
                 CharCorpusCfg(
                     text_paths=[
-                        TEXT_DIR / "digital_text.txt",
+                        TEXT_DIR / "D_number_text.txt",
                     ],
                     filter_by_chars=True,
-                    chars_file=CHAR_DIR / "jp_number.txt",
+                    chars_file=CHAR_DIR / "alphabet.txt",
                     length=(9, 10),
                     font_dir=font_cfg["font_dir"],
                     font_list_file=font_cfg["font_list_file"],
@@ -117,10 +117,10 @@ def extra_text_line_data():
             CharCorpus(
                 CharCorpusCfg(
                     text_paths=[
-                        TEXT_DIR / "digital_text.txt",
+                        TEXT_DIR / "D_number_text.txt",
                     ],
                     filter_by_chars=True,
-                    chars_file=CHAR_DIR / "jp_number.txt",
+                    chars_file=CHAR_DIR / "alphabet.txt",
                     length=(9, 10),
                     font_dir=font_cfg["font_dir"],
                     font_list_file=font_cfg["font_list_file"],

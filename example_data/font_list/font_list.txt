@@ -1,2 +1,6 @@
 DS-DIGI.TTF
 DS-DIGIB.TTF
+
+NotoSans-Bold.ttf
+NotoSans-Italic.ttf
+NotoSans-Regular.ttf

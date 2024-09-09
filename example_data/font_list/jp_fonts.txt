@@ -26,6 +26,5 @@ MotoyaExGothic-W3.ttf
 MotoyaExGothic-W4.ttf
 MS-Gothic.ttf
 MS-Mincho.ttf
-NotoSans-Bold.ttf
-NotoSans-Italic.ttf
-NotoSans-Regular.ttf
+ncsr55w.ttf
+SCHLBKB.TTF

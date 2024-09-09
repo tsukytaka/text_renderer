@@ -50,7 +50,7 @@ def base_cfg(
     name: str, corpus, corpus_effects=None, layout_effects=None, layout=None, gray=True
 ):
     return GeneratorCfg(
-        num_image=5000,
+        num_image=10,
         save_dir=OUT_DIR / name,
         render_cfg=RenderCfg(
             bg_dir=BG_DIR,
@@ -79,7 +79,7 @@ def rand_data():
     return base_cfg(
         inspect.currentframe().f_code.co_name,
         corpus=RandCorpus(
-            RandCorpusCfg(chars_file=CHAR_DIR / "jp_number.txt", **font_cfg),
+            RandCorpusCfg(chars_file=CHAR_DIR / "jp_number.txt", **font_cfg, char_spacing=-1),
         ),
     )
 
@@ -149,7 +149,7 @@ def imgaug_emboss_example():
 # fmt: off
 # The configuration file must have a configs variable
 configs = [
-    number_data(),
+    #number_data(),
     rand_data(),
     # word_data(),
     # extra_text_line_data(),
